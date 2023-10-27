@@ -17,8 +17,8 @@ const Form = (props) => {
     return (
         <div>
             {
-                id < 0 || id > 83?
-                    <h2 className='text-white bg-danger p-2'>ID out of range</h2>
+                id < 0?
+                    <h2 className='text-white bg-danger p-2'>ID Cannot be Negative</h2>
                     :null
             }
             <form
@@ -29,11 +29,10 @@ const Form = (props) => {
                     className='form-control text-center'
                     onChange={(e) => setUserSelect(e.target.value)}
                 >
-                    <option value="People">People</option>
-                    <option value="Planets">Planets</option>
-                    <option value="Starships">Starships</option>
-                    <option value="Vehicles">Vehicles</option>
-                    <option value="Films">Films</option>
+                    <option value="people">People</option>
+                    <option value="planets">Planets</option>
+                    <option value="starships">Starships</option>
+                    <option value="films">Films</option>
                 </select>
                 <div className='d-flex justify-content-evenly align-items-center mt-3'>
                     <div className='d-flex align-items-center'>

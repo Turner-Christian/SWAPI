@@ -4,6 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import People from "./People";
+import Planets from "./Planets";
+import Starships from "./StarShips";
+import Films from "./Films";
 
 const ReturnSearch = (props) => {
     const { search, id } = useParams();
@@ -13,8 +17,6 @@ const ReturnSearch = (props) => {
     useEffect(() => {
         axios.get(`https://swapi.dev/api/${search}/${id}`)
             .then(response => { setResult(response.data) })
-        axios.get("https://swapi.dev/api/people/?page=9")
-            .then(response => { console.log(response.data) })
     }, [])
 
     const goBack = (e) => {
@@ -22,28 +24,32 @@ const ReturnSearch = (props) => {
         navigate('/');
     }
 
-
+    const DetermineRender = () => {
+        if(userSelect === 'people'){
+            return (
+                <People search={search} id={id} result={result} setResult={setResult}/>
+            )
+        }
+        else if(userSelect === 'planets'){
+            return (
+                <Planets search={search} id={id} result={result} setResult={setResult}/>
+            )
+        }
+        else if(userSelect === 'starships'){
+            return (
+                <Starships search={search} id={id} result={result} setResult={setResult}/>
+            )
+        }
+        else if(userSelect === 'films'){
+            return (
+                <Films search={search} id={id} result={result} setResult={setResult}/>
+            )
+        }
+    }
 
     return (
         <>
-            {
-                result.length === 0 ?
-                    <div className="spinner-border mb-5"
-                        style={{ width: '3rem', height: '3rem' }} role="status">
-                    </div>
-                    : null
-            }
-            <div className="card p-5 rounded bg-success-subtle">
-                <h1 className="mb-5"><u><strong>{result.name}</strong></u></h1>
-                <p>Height : <strong>{result.height}cm</strong></p>
-                <p>Hair Color : <strong>{result.hair_color}</strong></p>
-                <p>Skin Color : <strong>{result.skin_color}</strong></p>
-                <p>Eye Color : <strong>{result.eye_color}</strong></p>
-            </div>
-            <div>
-                <button className="btn bg-black text-white mt-5"
-                    onClick={goBack}>Go Back</button>
-            </div>
+            {DetermineRender()}
         </>
     )
 }
